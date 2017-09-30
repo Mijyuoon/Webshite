@@ -1,0 +1,25 @@
+%html
+  %head
+    = csrf_meta_tag
+    = favicon_link_tag
+    %meta(charset="utf-8")
+    %meta(name="viewport" content="width=device-width, initial-scale=1")
+    %title Mijyuoon's Webshite - #{yield :title}
+    = stylesheet_link_tag 'application', media: :all
+    = stylesheet_link_tag "controller/#{params[:controller]}", media: :all
+    = javascript_include_tag 'application'
+    = javascript_include_tag "controller/#{params[:controller]}"
+  %body
+    #vue-app-root
+      %b-navbar(toggleable="sm" type="light" variant="light")
+        %b-nav-toggle(target="navbar-collapse")
+        %b-navbar-brand(href="#")
+          %img.navbar-logo{src: asset_path('logo.png')}
+        %b-navbar-brand(href="#") Mijyuoon's Website
+        %b-collapse#navbar-collapse(is-nav)
+          %app-navbar-menu(active="home")
+          %app-navbar-right
+      = yield
+    = javascript_include_tag 'vuejs_init'
+    - if params[:console]
+      = console

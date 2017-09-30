@@ -1,0 +1,12 @@
+:coffee
+  module.exports = {
+    props: ['login']
+  }
+
+%template
+  %b-nav.ml-auto(is-nav-bar)
+    %div{'v-if': 'login'}
+    %div{'v-else': true}
+      %b-nav-form
+        %b-form-input.mr-sm-2(type="text" placeholder="Access token…")
+        %b-button.mr-sm-0(href="#" variant="outline-success") Admin Access

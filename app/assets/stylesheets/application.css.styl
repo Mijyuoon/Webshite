@@ -1,0 +1,19 @@
+/*
+*= require libs/bootstrap.min
+*= require libs/bootstrap-vue.min
+*= require libs/font-faces
+*/
+
+$navbar-logo-size  = 48px;
+$navbar-logo-inset = 6px;
+
+.navbar-logo {
+  width $navbar-logo-size;
+  height $navbar-logo-size;
+  margin -($navbar-logo-inset) 0;
+}
+
+// Kludge for bootstrap-vue
+.form-inline {
+  margin-bottom 0;
+}
