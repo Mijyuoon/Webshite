@@ -19,8 +19,8 @@ gem 'haml-rails', '~> 1.0'
 # Use CoffeScript for scrips
 gem 'coffee-rails', '~> 4.2'
 # Use Stylus for stylesheets
-# gem 'stylus', '~> 1.0'
-gem 'stylus', github: 'jive/ruby-stylus'
+gem 'stylus', '~> 1.0'
+# gem 'stylus', github: 'jive/ruby-stylus'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
