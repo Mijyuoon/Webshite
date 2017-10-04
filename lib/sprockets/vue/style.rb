@@ -1,16 +1,14 @@
 module Sprockets::Vue
   class Style
+    STYLE_REGEX = %r{<style>(.*?)</style>}m
+
     def call(input)
       data, key = input[:data], self.class.cache_key
 
       input[:cache].fetch([key, input[:source_path], data]) do
-        parsed = Nokogiri::HTML.parse(data)
+        style = data.scan(STYLE_REGEX).map(&:first).join("\n")
 
-        if (style = parsed.css('style').first)
-          { data: style.content }
-        else
-          { data: '' }
-        end
+        { data: style }
       end
     end
 

@@ -1,12 +1,31 @@
 :coffee
   module.exports = {
     props: ['login']
+    data: -> {
+      mode: false
+    }
+    computed: {
+      modeButtonClass: ->
+        { 'fa-user': @mode, 'fa-key': !@mode }
+    }
+    methods: {
+      toggleMode: ->
+        @mode = !@mode
+    }
   }
 
 %template
   %b-nav.ml-auto(is-nav-bar)
     %div{'v-if': 'login'}
-    %div{'v-else': true}
+    %div{'v-else-if': 'mode'}
       %b-nav-form
-        %b-form-input.mr-sm-2(type="text" placeholder="Access token…")
-        %b-button.mr-sm-0(href="#" variant="outline-success") Admin Access
+        %b-input-group
+          %b-form-input(type="text" placeholder="Access token…")
+          %b-input-group-button
+            %b-button(href="#" variant="outline-success") Enter
+    %div{'v-else': true}
+      %b-button-group
+        %b-button(href="#" variant="outline-secondary") Register
+        %b-button(href="#" variant="outline-success") Log In
+    %b-button.ml-sm-2(variant="outline-secondary"){'@click': 'toggleMode'}
+      %i.fa.fa-fw{':class': 'modeButtonClass'}
