@@ -1,30 +1,28 @@
 :coffee
-  navbar = [
-    {key: 'home', url: '/', text: 'Home'}
-  ]
-
   module.exports = {
     props: ['active']
     data: -> {
-      items: navbar
+      items: [
+        {key: 'home', text: 'Home', url: $Route.home}
+      ]
     }
     methods: {
       isActive: (ob) ->
-        { active: ob.key == this.active }
+        { active: ob.key == @active }
       hasActive: (ob) ->
-        { active: ob.find((x) => x.key == this.active) }
+        { active: ob.find((x) => x.key == @active) }
     }
   }
 
 %template
-  %b-nav(is-nav-bar)
+  %b-navbar-nav
     %div{'v-for': 'n in items'}
       %b-nav-item{'v-if': 'n.url',
-        ':href': 'n.url', ':class': 'isActive(n)'} {{n.text}}
+      ':href': 'n.url', ':class': 'isActive(n)'} {{n.text}}
       %b-nav-item-dropdown{'v-else-if': 'n.items',
-        ':text': 'n.text', ':class': 'hasActive(n.items)'}
+      ':text': 'n.text', ':class': 'hasActive(n.items)'}
         %div{'v-for': 's in n.items'}
           %b-dropdown-item{'v-if': 's.url',
-            ':href': 's.url', ':class': 'isActive(s)'} {{s.text}}
+          ':href': 's.url', ':class': 'isActive(s)'} {{s.text}}
           %b-dropdown-header{'v-else-if': 's.text'} {{s.text}}
           %b-dropdown-divider{'v-else-if': 's.divider'}

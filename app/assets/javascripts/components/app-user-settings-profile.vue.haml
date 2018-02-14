@@ -1,0 +1,53 @@
+:coffee
+  module.exports = {
+    props: ['user']
+    data: -> {
+      maxChars: 500
+      form: {
+        type: 'profile'
+        username: @user.username
+        info_about: @user.info_about
+      }
+      errors: null
+      loading: false
+    }
+    computed: {
+      charsLeft: -> @maxChars - @form.info_about.length
+    }
+    methods: {
+      onSubmit: (e) ->
+        e.preventDefault()
+        @errors = null
+        @loading = true
+
+        $.ajax {
+          url: $Route.users_edit
+          method: 'PATCH'
+          data: @form
+        }
+        .done (data) =>
+          @loading = false
+          unless data.success
+            @errors = data.messages
+        .fail (_, err) =>
+          @loading = false
+          @errors = ['Unknown error, try again later']
+    }
+  }
+
+%template
+  %b-form{'@submit': 'onSubmit'}
+    %b-form-group.form-label(label="Username")
+      %b-form-input(type="text" required
+      placeholder="Enter username…"){'v-model': 'form.username'}
+    %b-form-group.form-label(label="Information about me")
+      %div(slot="description")
+        %span Characters left: {{charsLeft}}
+        %a.pull-right(href="#") Markdown reference
+      %b-form-textarea(rows="4"){'v-model': 'form.info_about', ':maxlength': 'maxChars'}
+    %b-alert(variant="danger" show){'v-if': 'errors'}
+      %div Following errors have occurred:
+      %ul
+        %li{'v-for': 'msg in errors'} {{msg}}
+    %m-loading-spinner(size="lg"){'v-if': 'loading'}
+    %b-button.fullwidth(variant="primary" type="submit"){'v-else': true} Update profile

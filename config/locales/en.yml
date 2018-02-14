@@ -1,2 +1,32 @@
 en:
-  hello: "Hello world"
+  time:
+    formats:
+      iso8601: '%Y-%m-%d %H:%M:%S %:z'
+      shortdate: '%d %b, %Y'
+  rails:
+    flash:
+      danger:
+        access_denied:
+          title: "Access Denied"
+          body: "You do not have permissions to access this page"
+    controllers:
+      sessions:
+        errors:
+          bad_login: "Could not log in, please check your email and password"
+      users:
+        misc:
+          permissions:
+            manage_users: "Manage users, duh"
+            manage_permissions: "Manage permissions, duh"
+  activerecord:
+    errors:
+      models:
+        _generic_:
+          attributes:
+            base: &ar_generic_base
+              bad_request: "Attempted to submit an invalid request"
+        user:
+          attributes:
+            base:
+              <<: *ar_generic_base
+              old_password: "Old password does not match current user's password"

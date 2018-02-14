@@ -2,6 +2,8 @@
 *= require libs/bootstrap.min
 *= require libs/bootstrap-vue.min
 *= require libs/font-faces
+
+*= require components/m-loading-spinner
 */
 
 $navbar-logo-size  = 48px;
@@ -13,7 +15,27 @@ $navbar-logo-inset = 6px;
   margin -($navbar-logo-inset) 0;
 }
 
-// Kludge for bootstrap-vue
-.form-inline {
+.navbar-label {
+  vertical-align middle;
+}
+
+.app-content {
+  padding 1.2rem 0;
+}
+
+.app-alerts {
+  .title {
+    font-weight bold;
+  }
+}
+
+.fullwidth {
+  width 100%;
+}
+
+// Kludges for bootstrap-vue
+.form-inline,
+.card-body > *:last-child,
+.alert > *:last-child {
   margin-bottom 0;
 }

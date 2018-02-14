@@ -20,19 +20,20 @@ gem 'haml-rails', '~> 1.0'
 gem 'coffee-rails', '~> 4.2'
 # Use Stylus for stylesheets
 gem 'stylus', '~> 1.0'
-# gem 'stylus', github: 'jive/ruby-stylus'
+# Use Uglifier for Javascript minification
+gem 'uglifier', '~> 3.2'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.11'
-# gem 'bcrypt', github: 'codahale/bcrypt-ruby'
-# Markdown processor
-gem 'redcarpet', '~> 3.4.0'
-
 # Use Figaro for configuration
 gem 'figaro', '~> 1.0'
+# Markdown processor
+gem 'redcarpet', '~> 3.4.0'
+# Miscelaneous utilities
+gem 'deep_merge', '~> 1.1.1'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

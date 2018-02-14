@@ -1,0 +1,27 @@
+- provide :title, 'User Profile'
+.profile-cards
+  %b-card
+    %b-media
+      %b-img(slot="aside" alt="Gravatar"){src: gravatar_url(@user)}
+      %h4.mt-0= @user.username
+      .card.card-body.bg-light
+        = Mijyu::Markdown.parse(@user.info_about)
+  %b-card
+    %b-row
+      %b-col.profile-info
+        %h4 Personal details
+        %b-input-group
+          %b-input-group-prepend(is-text title="Email"){'v-b-tooltip.hover': true}
+            %span.fa.fa-fw.fa-envelope-o
+          %span.form-control= @user.email
+        %b-input-group
+          %b-input-group-prepend(is-text title="Created at"){'v-b-tooltip.hover': true}
+            %span.fa.fa-fw.fa-calendar-plus-o
+          %span.form-control= l(@user.created_at, format: :iso8601)
+        %b-input-group
+          %b-input-group-prepend(is-text title="Last updated at"){'v-b-tooltip.hover': true}
+            %span.fa.fa-fw.fa-calendar-check-o
+          %span.form-control= l(@user.updated_at, format: :iso8601)
+      %b-col
+        %h4 Permissions
+        %app-user-permissions{':items': 'user.permissions'}

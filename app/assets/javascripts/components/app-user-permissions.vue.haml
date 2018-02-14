@@ -1,0 +1,14 @@
+:coffee
+  module.exports = {
+    props: ['items']
+    data: -> {
+      fields: [
+        {key: 'id', label: '#', tdClass: 'permission-id'}
+        {key: 'name', label: 'Name', tdClass: 'permission-name'}
+        {key: 'desc', label: 'Description', tdClass: 'permission-desc'}
+      ]
+    }
+  }
+
+%template
+  %b-table(striped){':items': 'items', ':fields': 'fields'}

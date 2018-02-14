@@ -1,0 +1,59 @@
+:coffee
+  module.exports = {
+    props: ['target']
+    data: -> {
+      form: {
+        email: ''
+        password: ''
+      }
+      errors: null
+      loading: false
+    }
+    methods: {
+      onSubmit: (e) ->
+        e.preventDefault()
+        @errors = null
+        @loading = true
+
+        $.ajax {
+          url: $Route.login
+          method: 'POST'
+          data: @form
+        }
+        .done (data) =>
+          @loading = false
+          if data.success
+            location.reload()
+            @onReset()
+          else
+            @errors = data.messages
+        .fail (_, err) =>
+          @loading = false
+          @error = 'Unknown error. Try again later.'
+
+      onReset: ->
+        @errors = null
+        @$refs.popover.$emit('close')
+    }
+  }
+
+%template
+  %b-popover(ref="popover" placement="auto" title="Log In"){':target': 'target'}
+    %b-form{'@submit': 'onSubmit', '@reset': 'onReset'}
+      %b-form-group
+        %b-input-group
+          %b-input-group-prepend(is-text title="Email"){'v-b-tooltip.hover.bottom': true}
+            %i.fa.fa-fw.fa-at
+          %b-form-input(type="text" placeholder="Email…" required){'v-model': 'form.email'}
+      %b-form-group
+        %b-input-group
+          %b-input-group-prepend(is-text title="Password"){'v-b-tooltip.hover.bottom': true}
+            %i.fa.fa-fw.fa-key
+          %b-form-input(type="password" placeholder="Password…" required){'v-model': 'form.password'}
+      %b-form-group
+        %b-form-checkbox(name="remember") Remember my session
+      %b-alert(variant="danger" show){'v-if': 'errors'} {{errors[0]}}
+      %div{'v-if': '!loading'}
+        %b-button(type="submit" variant="primary") Submit
+        %b-button(type="reset" variant="secondary") Cancel
+      %m-loading-spinner(size="md"){'v-if': 'loading'}

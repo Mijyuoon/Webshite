@@ -1,0 +1,13 @@
+- provide :title, 'User Settings'
+%b-card(no-body)
+  %b-tabs(card)
+    %b-tab(title="Profile")
+      %app-user-settings-profile{':user': 'user'}
+    %b-tab(title="Account")
+      %app-user-settings-account{':user': 'user'}
+    %b-tab(title="Permissions" active)
+      - if has_access?(:manage_permissions)
+        %app-user-settings-permissions{':user': 'user'}
+      - else
+        %b-alert(variant="danger" show)
+          You do not have sufficient permissions to access this feature

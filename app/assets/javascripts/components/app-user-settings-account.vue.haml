@@ -1,0 +1,51 @@
+:coffee
+  module.exports = {
+    props: ['user']
+    data: -> {
+      form: {
+        type: 'password'
+        password: ''
+        password_confirmation: ''
+        old_password: ''
+      }
+      errors: null
+      loading: false
+    }
+    methods: {
+      onSubmit: (e) ->
+        e.preventDefault()
+        @errors = null
+        @loading = true
+
+        $.ajax {
+          url: $Route.users_edit
+          method: 'PATCH'
+          data: @form
+        }
+        .done (data) =>
+          @loading = false
+          unless data.success
+            @errors = data.messages
+        .fail (_, err) =>
+          @loading = false
+          @errors = ['Unknown error, try again later']
+    }
+  }
+
+%template
+  %b-form{'@submit': 'onSubmit'}
+    %b-form-group.form-label(label="Old password")
+      %b-form-input(type="password" required
+      placeholder="Enter old password…"){'v-model': 'form.old_password'}
+    %b-form-group.form-label(label="New password")
+      %b-form-input(type="password" required
+      placeholder="Enter new password…"){'v-model': 'form.password'}
+    %b-form-group.form-label(label="Confirm password")
+      %b-form-input(type="password" required
+      placeholder="Re-enter new password…"){'v-model': 'form.password_confirmation'}
+    %b-alert(variant="danger" show){'v-if': 'errors'}
+      %div Following errors have occurred:
+      %ul
+        %li{'v-for': 'msg in errors'} {{msg}}
+    %m-loading-spinner(size="lg"){'v-if': 'loading'}
+    %b-button.fullwidth(variant="primary" type="submit"){'v-else': true} Change password

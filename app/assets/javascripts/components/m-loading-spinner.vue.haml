@@ -1,0 +1,68 @@
+:coffee
+  module.exports = {
+    props: ['size']
+    computed: {
+      cssStyles: ->
+        ['m-loading-spinner-' + @size]
+    }
+  }
+
+:styl
+  .m-loading-spinner {
+    font-size: 10px;
+    margin: 10px auto;
+    text-indent: -9999em;
+    border-radius: 50%;
+    background: linear-gradient(to right, #333333ff 10%, #33333300 42%);
+    animation: m-loading-spinner 1.4s infinite linear;
+    transform: translateZ(0);
+    position: relative;
+  }
+
+  .m-loading-spinner-lg {
+    width 8em;
+    height 8em;
+  }
+
+  .m-loading-spinner-md {
+    width 4em;
+    height 4em;
+  }
+
+  .m-loading-spinner-sm {
+    width 2em;
+    height 2em;
+  }
+
+  .m-loading-spinner:before {
+    content: '';
+    width: 50%;
+    height: 50%;
+    background: #333333;
+    border-radius: 100% 0 0 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .m-loading-spinner:after {
+    content: '';
+    background: #ffffff;
+    width: 75%;
+    height: 75%;
+    border-radius: 50%;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }
+
+  @keyframes m-loading-spinner {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+%template
+  .m-loading-spinner{':class': 'cssStyles'}
