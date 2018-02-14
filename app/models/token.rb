@@ -13,9 +13,9 @@ class Token < ApplicationRecord
 
   serialize :payload, Payload
 
-  def self.generate(kind:, target: nil, length: nil, expires: nil, payload: nil)
+  def self.generate(kind:, to: nil, length: nil, expires: nil, payload: nil)
     Token.new(kind: kind, value: Mijyu::Hashes.new_random(length),
-      tokenable: target, expires_at: expires, payload: payload)
+      tokenable: to, expires_at: expires, payload: payload)
   end
 
   def verify_expired!

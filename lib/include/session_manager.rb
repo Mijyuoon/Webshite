@@ -3,8 +3,10 @@ module Include
     def current_user
       if (uid = session[:user_id])
         @current_user ||= User.find_by(id: uid)
-      elsif (token = cookies.signed[:session])
-        @current_user ||= User.find_by(id: uid)
+      elsif (sid = cookies.signed[:session])
+        token = Token.find_by(kind: :session, value: sid)
+
+        @current_user ||= token&.tokenable
         session[:user_id] = @current_user
       end
     end

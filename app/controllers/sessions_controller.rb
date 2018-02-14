@@ -3,9 +3,11 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:email])
     if user&.authenticate(params[:password])
       session[:user_id] = user.id
-      if params[:remember]
-        # This is *** V e R y S e C u R e ***
-        cookies.permanent.signed[:session] = user.id
+      unless params[:remember].blank?
+        token = Token.generate(kind: :session, to: user)
+        token.save!
+
+        cookies.permanent.signed[:session] = token.value
       end
 
       render json: {
@@ -20,6 +22,10 @@ class SessionsController < ApplicationController
   end
 
   def destroy
+    if (sid = cookies.signed[:session])
+      Token.destroy_all(kind: :session, value: sid)
+    end
+
     session.delete(:user_id)
     cookies.delete(:session)
 

@@ -5,6 +5,7 @@
       form: {
         email: ''
         password: ''
+        remember: ''
       }
       errors: null
       loading: false
@@ -51,7 +52,7 @@
             %i.fa.fa-fw.fa-key
           %b-form-input(type="password" placeholder="Password…" required){'v-model': 'form.password'}
       %b-form-group
-        %b-form-checkbox(name="remember") Remember my session
+        %b-form-checkbox(unchecked-value=""){'v-model': 'form.remember'} Remember my session
       %b-alert(variant="danger" show){'v-if': 'errors'} {{errors[0]}}
       %div{'v-if': '!loading'}
         %b-button(type="submit" variant="primary") Submit
